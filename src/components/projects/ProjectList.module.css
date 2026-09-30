@@ -1,0 +1,219 @@
+.list {
+  position: relative;
+}
+
+.item {
+  border-bottom: 1px solid var(--rule);
+}
+
+/*
+ * Four columns: index, thumbnail, the whole text block, chevron. Stacking the
+ * summary under the title rather than beside it is what buys the row enough
+ * room to carry an image without feeling packed.
+ */
+.row {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3.25rem 13.5rem minmax(0, 1fr) 2.25rem;
+  align-items: center;
+  gap: clamp(1rem, 2.5vw, 2.25rem);
+
+  width: 100%;
+  padding: clamp(1.5rem, 3vw, 2.1rem) 0;
+  text-align: left;
+  /* Contains the wash below, which would otherwise fall through to the root
+     stacking context and hide behind the page. */
+  isolation: isolate;
+
+  transition: padding-left var(--dur) var(--ease-out);
+}
+
+/* Hover wash that grows from the left edge, bleeding into the page gutter so
+   the row reads as a full-width band rather than a boxed card. */
+.row::before {
+  content: '';
+  position: absolute;
+  inset: 0 calc(var(--gutter) * -0.4);
+  z-index: -1;
+  background: linear-gradient(90deg, var(--wash), transparent 72%);
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease-out);
+}
+
+.row:hover::before,
+.row:focus-visible::before {
+  opacity: 1;
+}
+
+.row:hover,
+.row:focus-visible {
+  padding-left: 1.1rem;
+}
+
+.number {
+  align-self: start;
+  padding-top: 0.2rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+  transition: color var(--dur) var(--ease-out);
+}
+
+.row:hover .number,
+.row:focus-visible .number {
+  color: var(--accent);
+}
+
+/* Thumbnail --------------------------------------------------------------- */
+
+.thumb {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background: var(--surface);
+  transition:
+    border-color var(--dur) var(--ease-out),
+    box-shadow var(--dur) var(--ease-out);
+}
+
+.row:hover .thumb,
+.row:focus-visible .thumb {
+  border-color: var(--rule-strong);
+  box-shadow: var(--shadow-float);
+}
+
+.thumbImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+  /* The screenshots are a loud mix of blues and purples; holding them back a
+     little at rest keeps the list calm and gives hover something to do. */
+  filter: saturate(0.6);
+  transition:
+    filter var(--dur-slow) var(--ease-out),
+    transform var(--dur-slow) var(--ease-out);
+}
+
+.row:hover .thumbImage,
+.row:focus-visible .thumbImage {
+  filter: none;
+  transform: scale(1.04);
+}
+
+/* Stand-in for projects without a screenshot yet. */
+.plate {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0.75rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-align: center;
+  color: var(--ink-faint);
+}
+
+/* Text -------------------------------------------------------------------- */
+
+.text {
+  min-width: 0;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.7rem;
+  margin-bottom: 0.5rem;
+
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.title {
+  font-size: var(--step-2);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  transition: color var(--dur) var(--ease-out);
+}
+
+.row:hover .title,
+.row:focus-visible .title {
+  color: var(--accent);
+}
+
+.summary {
+  margin-top: 0.55rem;
+  max-width: 56ch;
+  color: var(--ink-dim);
+  font-size: var(--step-0);
+  line-height: 1.55;
+}
+
+.stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.9rem;
+}
+
+.tag {
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--ink-dim);
+}
+
+.chevron {
+  justify-self: end;
+  width: 1.3rem;
+  height: 1.3rem;
+  color: var(--ink-faint);
+  transition:
+    transform var(--dur) var(--ease-spring),
+    color var(--dur) var(--ease-out);
+}
+
+.row:hover .chevron,
+.row:focus-visible .chevron {
+  transform: translateX(5px);
+  color: var(--accent);
+}
+
+@media (max-width: 1000px) {
+  .row {
+    grid-template-columns: 3rem 10.5rem minmax(0, 1fr);
+  }
+
+  .chevron {
+    display: none;
+  }
+}
+
+@media (max-width: 760px) {
+  .row {
+    grid-template-columns: 2.5rem minmax(0, 1fr);
+    align-items: start;
+    gap: 0.9rem 1rem;
+  }
+
+  .thumb {
+    grid-column: 2;
+  }
+
+  .text {
+    grid-column: 2;
+  }
+}

@@ -1,0 +1,154 @@
+/*
+ * Design tokens.
+ *
+ * Five source colours carry the whole site:
+ *   #e8f1f2 porcelain · #b3efb2 pale mint · #7a9e7e sage
+ *   #31493c pine      · #001a23 deep teal
+ *
+ * Light uses porcelain as the ground and deep teal as the ink. Dark has its
+ * own forest-and-cream set (see below) rather than swapping them. Every name below describes a role, not a hue, so a component never has
+ * to know which theme it is in: `--accent-hover` is darker in light and
+ * lighter in dark, and the component just asks for "hover".
+ */
+:root,
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  --ground: #e8f1f2;
+  --surface: #dae7e8;
+  --surface-raised: #cbdcdd;
+
+  /* Header and footer are deliberately their own bands. */
+  --header-surface: #d6ece0;
+  --footer-surface: #31493c;
+  --footer-ink: #e8f1f2;
+  --footer-ink-dim: rgba(232, 241, 242, 0.74);
+  --footer-rule: rgba(232, 241, 242, 0.22);
+
+  /* #44704f rather than the palette's #7a9e7e: sage only reaches 2.8:1 on
+     porcelain, which is not a colour you can set text in. This sits between
+     sage and pine at 4.9:1. */
+  --accent: #44704f;
+  --accent-hover: #31493c;
+  --accent-soft: #7a9e7e;
+  --accent-pale: #b3efb2;
+
+  /* Project cards carry a green tint so the archive grid reads as its own surface. */
+  --card-surface: #d3eadb;
+  --card-media: #bfdfcb;
+  --card-rule: rgba(49, 73, 60, 0.2);
+
+  --ink: #001a23;
+  --ink-dim: rgba(0, 26, 35, 0.78);
+  --ink-faint: rgba(0, 26, 35, 0.62);
+  --rule: rgba(0, 26, 35, 0.16);
+  --rule-strong: rgba(0, 26, 35, 0.32);
+  --wash: rgba(0, 26, 35, 0.05);
+  --wash-strong: rgba(0, 26, 35, 0.09);
+  /* The raised thumb of the header's segmented control. */
+  --thumb-surface: #fbfdfd;
+
+  --shadow-card: 0 30px 70px -38px rgba(0, 26, 35, 0.45);
+  --shadow-float: 0 20px 44px -28px rgba(0, 26, 35, 0.35);
+
+  --photo-veil: rgba(0, 26, 35, 0.4);
+  --aura-one: rgba(179, 239, 178, 0.55);
+  --aura-two: rgba(122, 158, 126, 0.4);
+}
+
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* Forest and cream: a warm green-black ground with paper-coloured ink and
+     pastel green accents, so dark mode keeps light mode's green without
+     going cold and blue. */
+  --ground: #10170f;
+  --surface: #172017;
+  --surface-raised: #1e291d;
+
+  --header-surface: #131b12;
+  --footer-surface: #0a0f09;
+  --footer-ink: #ece6d6;
+  --footer-ink-dim: rgba(236, 230, 214, 0.7);
+  --footer-rule: rgba(236, 230, 214, 0.14);
+
+  /* Pastel green: light and low-saturation so it glows softly on the dark
+     ground instead of reading as a bright UI green. */
+  --accent: #b9dcb4;
+  --accent-hover: #d5ecd1;
+  --accent-soft: #8fb08b;
+  --accent-pale: #d5ecd1;
+
+  /* Project cards carry a green tint so the archive grid reads as its own surface. */
+  --card-surface: #1a2618;
+  --card-media: #222f1f;
+  --card-rule: rgba(185, 220, 180, 0.16);
+
+  --ink: #ece6d6;
+  --ink-dim: rgba(236, 230, 214, 0.78);
+  --ink-faint: rgba(236, 230, 214, 0.58);
+  --rule: rgba(236, 230, 214, 0.12);
+  --rule-strong: rgba(236, 230, 214, 0.28);
+  --wash: rgba(236, 230, 214, 0.05);
+  --wash-strong: rgba(236, 230, 214, 0.09);
+  --thumb-surface: #3f6140;
+
+  --shadow-card: 0 30px 70px -34px rgba(0, 0, 0, 0.8);
+  --shadow-float: 0 20px 44px -26px rgba(0, 0, 0, 0.65);
+
+  --photo-veil: rgba(16, 23, 15, 0.55);
+  /* Warm, low glows: a hint of light behind the page, not neon. */
+  --aura-one: rgba(78, 104, 76, 0.42);
+  --aura-two: rgba(201, 180, 120, 0.12);
+}
+
+:root {
+  /* Type. */
+  --font-sans: 'Instrument Sans Variable', 'Instrument Sans', system-ui, -apple-system,
+    'Segoe UI', sans-serif;
+  --font-brand: 'Sora Variable', 'Sora', var(--font-sans);
+  --font-mono: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', 'Cascadia Mono', monospace;
+
+  /* Fluid scale, clamp pairs are min at 360px, max at 1440px. */
+  --step--1: clamp(0.78rem, 0.75rem + 0.14vw, 0.86rem);
+  --step-0: clamp(0.95rem, 0.9rem + 0.22vw, 1.08rem);
+  --step-1: clamp(1.1rem, 1rem + 0.45vw, 1.35rem);
+  --step-2: clamp(1.35rem, 1.15rem + 0.85vw, 1.9rem);
+  --step-3: clamp(1.75rem, 1.35rem + 1.7vw, 2.9rem);
+  --step-4: clamp(2.3rem, 1.5rem + 3.4vw, 4.4rem);
+
+  /* Rhythm. */
+  --gutter: clamp(1.25rem, 5vw, 5.5rem);
+  --measure: 62ch;
+  --section-gap: clamp(6rem, 14vh, 11rem);
+  --shell: 82rem;
+
+  /* Chrome. */
+  --header-height: 88px;
+  --header-height-docked: 62px;
+  --radius: 14px;
+  --radius-lg: 22px;
+
+  /* Motion. Every transition in the app pulls from these four. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-fast: 180ms;
+  --dur: 340ms;
+  --dur-slow: 680ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 1ms;
+    --dur: 1ms;
+    --dur-slow: 1ms;
+  }
+}
+
+@media (max-width: 720px) {
+  :root {
+    --header-height: 68px;
+    --header-height-docked: 56px;
+  }
+}

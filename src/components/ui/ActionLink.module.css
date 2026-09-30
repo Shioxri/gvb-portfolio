@@ -1,0 +1,127 @@
+.link {
+  --fill: var(--accent);
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7em;
+  isolation: isolate;
+  overflow: hidden;
+
+  padding: 0.85em 1.5em;
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+
+  font-size: var(--step-0);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+
+  transition:
+    border-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+/* The fill wipes up from the bottom edge instead of cross-fading, which reads
+   as a deliberate state change rather than a hover tint. */
+.link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--fill);
+  transform: translate3d(0, 101%, 0);
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.link:hover,
+.link:focus-visible {
+  color: var(--ground);
+  border-color: var(--fill);
+}
+
+.link:hover::before,
+.link:focus-visible::before {
+  transform: none;
+}
+
+.link:active {
+  transform: scale(0.975);
+}
+
+.label {
+  position: relative;
+}
+
+.arrow {
+  flex: none;
+  width: 1em;
+  height: 1em;
+  transition: transform var(--dur) var(--ease-spring);
+}
+
+.link:hover .arrow,
+.link:focus-visible .arrow {
+  transform: translate3d(0.28em, 0, 0);
+}
+
+/* External links point out of the page rather than along it. */
+.link[data-external='true']:hover .arrow,
+.link[data-external='true']:focus-visible .arrow {
+  transform: translate3d(0.22em, -0.22em, 0);
+}
+
+/* Quiet variant: no chip, just the label and a rule that grows on hover. */
+.link[data-variant='quiet'] {
+  padding: 0.2em 0;
+  border: 0;
+  border-radius: 0;
+  color: var(--ink-dim);
+}
+
+.link[data-variant='quiet']::before {
+  inset: auto 0 0 0;
+  height: 1px;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.link[data-variant='quiet']:hover,
+.link[data-variant='quiet']:focus-visible {
+  color: var(--ink);
+}
+
+.link[data-variant='quiet']:hover::before,
+.link[data-variant='quiet']:focus-visible::before {
+  transform: scaleX(1);
+}
+
+/* Solid variant: dark at rest, wiping to the accent on hover. */
+.link[data-variant='solid'] {
+  --fill: var(--accent);
+
+  background: var(--ink);
+  color: var(--ground);
+  border-color: var(--ink);
+  /* Snaps back instantly so the fill wipes down over the dark pill again. */
+  transition:
+    border-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    background-color 0s;
+}
+
+/* Once the wipe has landed, the pill itself takes the fill colour. Otherwise
+   the dark background bleeds through the anti-aliased rounded edge of the
+   wipe and draws a thin dark ring around the button. */
+.link[data-variant='solid']:hover,
+.link[data-variant='solid']:focus-visible {
+  background: var(--fill);
+  transition:
+    border-color var(--dur) var(--ease-out),
+    color var(--dur) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out),
+    background-color 0s linear var(--dur);
+}
