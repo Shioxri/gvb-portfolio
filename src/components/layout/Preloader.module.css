@@ -1,0 +1,176 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--ground);
+
+  /* Wipes upward off the top edge, so the hero is uncovered from the bottom
+     up, the same direction the content itself arrives from. */
+  clip-path: inset(0 0 0 0);
+  transition: clip-path 900ms var(--ease-in-out);
+}
+
+.overlay[data-exiting='true'] {
+  clip-path: inset(0 0 100% 0);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100%;
+  padding-block: clamp(1.75rem, 5vh, 3rem);
+
+  transition:
+    opacity 420ms var(--ease-out),
+    transform 620ms var(--ease-in-out);
+}
+
+.overlay[data-exiting='true'] .inner {
+  opacity: 0;
+  transform: translate3d(0, -1.5rem, 0);
+}
+
+/* Top row ----------------------------------------------------------------- */
+
+.top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.mark {
+  font-family: var(--font-sans);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  text-transform: none;
+  color: var(--ink);
+}
+
+/* Name -------------------------------------------------------------------- */
+
+.name {
+  font-size: var(--step-4);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.045em;
+  max-width: 14ch;
+}
+
+/* Each word sits in its own clipping box and rises into it, so the line
+   assembles itself rather than fading in as a block. */
+.word {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-right: 0.22em;
+}
+
+.word > span {
+  display: inline-block;
+  transform: translate3d(0, 110%, 0);
+  animation: rise 980ms var(--ease-out) forwards;
+  animation-delay: calc(var(--index) * 90ms + 160ms);
+}
+
+@keyframes rise {
+  to {
+    transform: none;
+  }
+}
+
+.role {
+  margin-top: 1.25rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent);
+
+  opacity: 0;
+  animation: fade 700ms var(--ease-out) 620ms forwards;
+}
+
+@keyframes fade {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Bottom row -------------------------------------------------------------- */
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.readout {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.status {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  transition: color var(--dur) var(--ease-out);
+}
+
+.count {
+  display: flex;
+  align-items: baseline;
+  gap: 0.1em;
+
+  font-family: var(--font-mono);
+  font-size: clamp(2.6rem, 9vw, 5rem);
+  font-weight: 300;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
+  /* Tabular figures stop the number jittering sideways as it counts. */
+  font-variant-numeric: tabular-nums;
+}
+
+.percent {
+  font-size: 0.3em;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+
+.track {
+  position: relative;
+  height: 1px;
+  background: var(--rule);
+  overflow: hidden;
+}
+
+.bar {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: scaleX(var(--progress, 0));
+  transform-origin: left;
+  /* Not eased here: the value arriving from the hook is already smoothed. */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word > span,
+  .role {
+    animation: none;
+    transform: none;
+    opacity: 1;
+  }
+}

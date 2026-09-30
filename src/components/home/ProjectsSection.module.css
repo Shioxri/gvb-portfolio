@@ -1,0 +1,10 @@
+.section {
+  padding-top: var(--section-gap);
+  scroll-margin-top: calc(var(--header-height-docked) + 2rem);
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2.5rem;
+}

@@ -1,0 +1,241 @@
+.section {
+  /* Smaller than --section-gap on purpose: the hero's own bottom rail already
+     closes it off, so stacking the full section gap on top left a stretch of
+     empty space with nothing in it. */
+  padding-top: clamp(1.5rem, 3vh, 2.5rem);
+  scroll-margin-top: calc(var(--header-height-docked) + 2rem);
+  /* Above the hero's orb, which can be dragged down into this section. */
+  position: relative;
+  z-index: 2;
+}
+
+.header {
+  margin-bottom: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+/* Education --------------------------------------------------------------- */
+
+.entries {
+  display: grid;
+  gap: 2.25rem;
+}
+
+.entry {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  align-items: start;
+  gap: 1.5rem;
+}
+
+.logo {
+  width: 3.25rem;
+  height: 3.25rem;
+  object-fit: contain;
+  padding: 0.4rem;
+  border-radius: 12px;
+  background: var(--wash);
+  border: 1px solid var(--rule);
+  transition:
+    transform var(--dur) var(--ease-spring),
+    border-color var(--dur) var(--ease-out);
+}
+
+.entryLink:hover .logo {
+  transform: scale(1.06) rotate(-2deg);
+  border-color: var(--accent);
+}
+
+.institution {
+  font-size: var(--step-1);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+.entryLink {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.entryLink svg {
+  width: 0.8em;
+  height: 0.8em;
+  color: var(--ink-faint);
+  transition:
+    transform var(--dur) var(--ease-spring),
+    color var(--dur) var(--ease-out);
+}
+
+.entryLink:hover svg {
+  transform: translate3d(2px, -2px, 0);
+  color: var(--accent);
+}
+
+.qualification {
+  margin-top: 0.35rem;
+  color: var(--ink-dim);
+}
+
+.period {
+  margin-top: 0.15rem;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  color: var(--ink-faint);
+}
+
+.notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.note {
+  padding: 0.3rem 0.75rem;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  font-size: 0.82rem;
+  color: var(--ink-dim);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.note:hover {
+  border-color: var(--rule-strong);
+  color: var(--ink);
+}
+
+/* Experience -------------------------------------------------------------- */
+
+.points {
+  margin-top: 1rem;
+  display: grid;
+  gap: 0.45rem;
+  color: var(--ink-dim);
+}
+
+.points li {
+  position: relative;
+  padding-left: 1.1rem;
+  line-height: 1.55;
+}
+
+.points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 5px;
+  height: 1px;
+  background: var(--accent);
+}
+
+.empty {
+  max-width: 52ch;
+  color: var(--ink-dim);
+  line-height: 1.6;
+}
+
+/* Skills ------------------------------------------------------------------ */
+
+.groups {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 2.25rem;
+}
+
+.groupTitle {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.skills {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.skill {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.4rem 0.5rem;
+  margin-left: -0.5rem;
+  border-radius: 8px;
+  color: var(--ink-dim);
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
+}
+
+.skill:hover {
+  background: var(--wash);
+  color: var(--ink);
+  transform: translateX(3px);
+}
+
+.skillIcon {
+  width: 1.15rem;
+  height: 1.15rem;
+  object-fit: contain;
+  /* The icons are a jumble of brand colours; desaturating them at rest keeps
+     the list calm and makes the hover state mean something. */
+  filter: grayscale(1) opacity(0.65);
+  transition: filter var(--dur) var(--ease-out);
+}
+
+.skill:hover .skillIcon {
+  filter: none;
+}
+
+/* Dark logos would vanish on the dark ground, so they flip instead. */
+:root[data-theme='dark'] .skillIcon[data-mono='true'] {
+  filter: invert(1) grayscale(1) opacity(0.65);
+}
+
+/* Inverting and then rotating the hue back keeps the brand colour but lightens it. */
+:root[data-theme='dark'] .skill:hover .skillIcon[data-mono='true'] {
+  filter: invert(1) hue-rotate(180deg);
+}
+
+/* Stand-in for concepts with no logo: a small diamond in the icon's slot. */
+.skillGlyph {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.skillGlyph::before {
+  content: '';
+  width: 0.45rem;
+  height: 0.45rem;
+  border: 1.5px solid var(--ink-faint);
+  transform: rotate(45deg);
+  transition:
+    border-color var(--dur) var(--ease-out),
+    background var(--dur) var(--ease-out);
+}
+
+.skill:hover .skillGlyph::before {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+@media (max-width: 560px) {
+  .entry {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+}

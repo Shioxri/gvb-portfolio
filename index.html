@@ -2,12 +2,63 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/png" href="/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GVB's Portfolio</title>
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+
+    <title>Gerard Vito Belardo · Software Developer</title>
+    <meta
+      name="description"
+      content="Gerard Vito Belardo (Troy) is a computer science student and software developer building useful interfaces and dependable systems."
+    />
+    <meta name="author" content="Gerard Vito Belardo" />
+    <meta name="theme-color" content="#e8f1f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#10170f" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Gerard Vito Belardo · Software Developer" />
+    <meta
+      property="og:description"
+      content="Projects, background and contact details for Gerard Vito Belardo."
+    />
+    <meta property="og:image" content="/assets/hero/heroNewImg.jpg" />
+
+    <link rel="preload" as="image" href="/assets/hero/heroNewImg.jpg" />
+    <script>
+      // Stamps the theme before first paint. Without this the page renders
+      // light for a frame and then flips, which is worse than no toggle.
+      ;(function () {
+        var theme = 'light'
+        try {
+          var stored = localStorage.getItem('gvb:theme')
+          if (stored === 'dark' || stored === 'light') theme = stored
+        } catch (error) {
+          /* Storage unavailable, fall through to the default. */
+        }
+        document.documentElement.dataset.theme = theme
+      })()
+    </script>
+    <style>
+      /* Painted before the bundle evaluates so nothing flashes. */
+      html,
+      body {
+        margin: 0;
+        background: #e8f1f2;
+      }
+      html[data-theme='dark'],
+      html[data-theme='dark'] body {
+        background: #10170f;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
+    <noscript>
+      <p style="color: #001a23; font: 16px/1.5 system-ui; padding: 2rem">
+        This portfolio needs JavaScript. You can still reach me at
+        <a style="color: #31493c" href="mailto:gv.belardo@gmail.com">gv.belardo@gmail.com</a>.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

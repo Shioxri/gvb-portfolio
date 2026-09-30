@@ -1,0 +1,191 @@
+/* A solid band, not a hairline: the page needs a bottom edge, and giving the
+   footer its own surface is the cheapest way to say "the content ends here". */
+.footer {
+  margin-top: var(--section-gap);
+  padding-block: clamp(3rem, 8vh, 5.5rem) 2.75rem;
+  background: var(--footer-surface);
+  color: var(--footer-ink);
+}
+
+.intro {
+  max-width: 34rem;
+}
+
+.title {
+  font-size: var(--step-4);
+  margin-top: 1.25rem;
+}
+
+.lede {
+  margin-top: 1.5rem;
+  font-size: var(--step-1);
+  line-height: 1.55;
+  color: var(--footer-ink-dim);
+}
+
+.actions {
+  margin-top: 2.25rem;
+}
+
+/* The footer's own surface is dark in both themes, so the shared solid button
+   (tuned for a light page background) needs its own colours here rather than
+   the page's --ink / --ground pair. */
+.cta[data-variant='solid'] {
+  --fill: var(--accent-pale);
+
+  background: var(--footer-ink);
+  color: var(--footer-surface);
+  border-color: var(--footer-ink);
+}
+
+.cta[data-variant='solid']:hover,
+.cta[data-variant='solid']:focus-visible {
+  color: var(--footer-surface);
+  border-color: var(--accent-pale);
+}
+
+/* Channels ------------------------------------------------------------ */
+
+/*
+ * One row of three. At rest each is just an icon and two lines of text on a
+ * faint wash; on hover a pale fill wipes across from the left and everything
+ * on it flips to the dark footer colour, so the target is unmistakable.
+ */
+.channels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin-top: clamp(3rem, 7vw, 4.5rem);
+}
+
+.channel {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  height: 100%;
+  padding: 1rem 1.15rem;
+  border-radius: var(--radius);
+  background: color-mix(in oklab, var(--footer-ink) 5%, transparent);
+  color: var(--footer-ink);
+  transition:
+    color var(--dur) var(--ease-out),
+    transform var(--dur) var(--ease-out);
+}
+
+.channel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--accent-pale);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur) var(--ease-out);
+}
+
+.channel:hover,
+.channel:focus-visible {
+  color: var(--footer-surface);
+  transform: translate3d(0, -2px, 0);
+}
+
+.channel:hover::before,
+.channel:focus-visible::before {
+  transform: none;
+}
+
+.channelIcon {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  transition: transform var(--dur) var(--ease-spring);
+}
+
+.channelIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.channel:hover .channelIcon,
+.channel:focus-visible .channelIcon {
+  transform: scale(1.12) rotate(-6deg);
+}
+
+.channelText {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.channelName {
+  font-size: var(--step-0);
+  font-weight: 550;
+  letter-spacing: -0.01em;
+}
+
+.channelValue {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
+  opacity: 0.72;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.channelArrow {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+  margin-left: auto;
+  opacity: 0.55;
+  transition:
+    opacity var(--dur-fast) var(--ease-out),
+    transform var(--dur) var(--ease-spring);
+}
+
+.channel:hover .channelArrow,
+.channel:focus-visible .channelArrow {
+  opacity: 1;
+  transform: translate3d(0.2rem, -0.2rem, 0);
+}
+
+@media (max-width: 52rem) {
+  .channels {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Bottom bar ------------------------------------------------------------ */
+
+.bottom {
+  margin-top: 2.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--footer-rule);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem 2rem;
+}
+
+.copyright {
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--footer-ink-dim);
+}
+
+.colophon {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--footer-ink-dim);
+}

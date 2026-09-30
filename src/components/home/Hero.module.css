@@ -1,0 +1,203 @@
+.hero {
+  position: relative;
+  padding-top: calc(var(--header-height) + clamp(2rem, 8vh, 5rem));
+  /* Small on purpose: the bottom rail's own border and copy already close the
+     section off, so this only needs to keep About from crowding it. */
+  padding-bottom: clamp(1.5rem, 4vh, 3rem);
+  /* The orb can be dragged and its aura spills past its box; never let
+     either widen the page. */
+  overflow-x: clip;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(2.5rem, 6vw, 5rem);
+}
+
+.copy {
+  min-width: 0;
+}
+
+/*
+ * Stacking for the draggable orb: it sits above the page background but under
+ * every piece of text, so dragging it across the copy never hides the words.
+ */
+.portraitSlot {
+  position: relative;
+  z-index: 1;
+}
+
+.copy,
+.rail {
+  position: relative;
+  z-index: 2;
+}
+
+/*
+ * Entrance. Everything is staged off a single `data-ready` flag set once the
+ * intro hands over, so the sequence starts at a known moment rather than
+ * racing the overlay.
+ */
+.stage {
+  opacity: 0;
+  transform: translate3d(0, 1.4rem, 0);
+  transition:
+    opacity 760ms var(--ease-out),
+    transform 760ms var(--ease-out);
+  transition-delay: calc(var(--index, 0) * 110ms);
+}
+
+.hero[data-ready='true'] .stage {
+  opacity: 1;
+  transform: none;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1.75rem;
+}
+
+.eyebrowRule {
+  width: 2.5rem;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 700ms var(--ease-out) 240ms;
+}
+
+.hero[data-ready='true'] .eyebrowRule {
+  transform: none;
+}
+
+.title {
+  /* Sized so the sentence lands on three lines in the grid track rather than
+     inheriting a scale step that was tuned for short headings. */
+  font-size: clamp(2rem, 3.4vw, 3.4rem);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
+}
+
+/* The name reads as the subject of the sentence, so it gets the emphasis and
+   the rest of the line steps back. */
+.name {
+  color: var(--ink);
+}
+
+.predicate {
+  color: var(--ink-faint);
+}
+
+.lede {
+  margin-top: 1.9rem;
+  max-width: 46ch;
+  font-size: var(--step-1);
+  line-height: 1.55;
+  color: var(--ink-dim);
+}
+
+.lede p + p {
+  margin-top: 1rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 2.6rem;
+}
+
+.variants {
+  margin-top: 1.1rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+}
+
+.variantLink {
+  color: var(--ink-dim);
+  text-decoration: underline;
+  text-decoration-color: var(--rule-strong);
+  text-underline-offset: 0.25em;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.variantLink:hover,
+.variantLink:focus-visible {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
+
+/* Bottom rail ------------------------------------------------------------- */
+
+.rail {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: clamp(3.5rem, 9vh, 6rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.scrollCue {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.scrollCue:hover {
+  color: var(--ink);
+}
+
+.scrollCue svg {
+  width: 1rem;
+  height: 1rem;
+  animation: nudge 2.4s var(--ease-in-out) infinite;
+}
+
+@keyframes nudge {
+  0%,
+  60%,
+  100% {
+    transform: none;
+  }
+  30% {
+    transform: translateY(4px);
+  }
+}
+
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 3rem;
+  }
+
+  .copy {
+    order: 2;
+  }
+
+  .rail {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scrollCue svg {
+    animation: none;
+  }
+}

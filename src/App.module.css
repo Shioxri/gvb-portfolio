@@ -1,9 +1,28 @@
-@import "./vars.css";
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+}
 
-.App{
-    background-color: var(--color-bg);
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
+.main {
+  flex: 1;
+}
 
+/* Route transition: the incoming page lifts into place. Keyed on the pathname
+   so it replays on every navigation rather than only on mount. */
+.page {
+  animation: enter 520ms var(--ease-out) both;
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.9rem, 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page {
+    animation: none;
+  }
 }

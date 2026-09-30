@@ -1,0 +1,203 @@
+/*
+ * A floating orb. `useFloatingOrb` owns .orb's transform (drift, push, drag);
+ * the aura cloud stays anchored at the orb's home spot.
+ */
+.anchor {
+  position: relative;
+  width: min(100%, 24rem);
+  margin-left: auto;
+}
+
+/* Holds the orb and its aura at the same home spot. */
+.body {
+  position: relative;
+  aspect-ratio: 1;
+}
+
+.orb {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+  will-change: transform;
+}
+
+.orb[data-dragging='true'] {
+  cursor: grabbing;
+}
+
+.circle {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  isolation: isolate;
+
+  background: var(--surface);
+  border: 1px solid color-mix(in oklab, var(--accent-pale) 60%, transparent);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    var(--shadow-card);
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 22%;
+  pointer-events: none;
+}
+
+/* Glassy highlight on the upper-left, so it reads as a sphere, not a cut-out. */
+.circle::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle at 30% 24%,
+    rgba(255, 255, 255, 0.34),
+    rgba(255, 255, 255, 0.06) 32%,
+    transparent 55%
+  );
+}
+
+/* Colour cast so the portrait sits in the palette instead of on top of it. */
+.circle::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(180deg, transparent 55%, var(--photo-veil));
+}
+
+/* Aura ------------------------------------------------------------------ */
+
+/*
+ * A cloud rather than a ring: a cluster of blurred puffs (positioned from
+ * Portrait.tsx) that each drift and swell on their own timing. Blurred
+ * together, their overlapping edges read as one billowing shape. The
+ * container only carries the opacity, which rises while the orb is moving.
+ */
+.aura {
+  position: absolute;
+  inset: -30%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.75;
+  filter: blur(22px);
+}
+
+.puff {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  width: var(--size);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  translate: -50% -50%;
+  background: radial-gradient(
+    circle,
+    color-mix(in oklab, var(--accent-pale) 85%, transparent) 0%,
+    color-mix(in oklab, var(--accent-pale) 50%, transparent) 45%,
+    transparent 72%
+  );
+  animation: billow var(--duration) var(--ease-in-out) var(--delay) infinite alternate;
+}
+
+@keyframes billow {
+  0% {
+    transform: translate(0, 0) scale(0.85);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(calc(var(--dx) * 0.4), calc(var(--dy) * -0.5)) scale(1.1);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy)) scale(0.95);
+    opacity: 0.8;
+  }
+}
+
+/* Caption chip, overlapping the orb's lower-left edge and riding with it. */
+.caption {
+  position: absolute;
+  left: -0.5rem;
+  bottom: 1.25rem;
+  z-index: 2;
+
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+
+  background: color-mix(in oklab, var(--ground) 72%, transparent);
+  border: 1px solid var(--rule);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  pointer-events: none;
+}
+
+.degree {
+  /* Above the aura, which spills down behind it. */
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.3rem;
+  margin-top: 2rem;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 55%, transparent);
+  animation: pulse 2.8s var(--ease-out) infinite;
+}
+
+@keyframes pulse {
+  60%,
+  100% {
+    box-shadow: 0 0 0 9px color-mix(in oklab, var(--accent) 0%, transparent);
+  }
+}
+
+@media (max-width: 900px) {
+  .anchor {
+    width: min(100%, 19rem);
+    margin-inline: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .orb {
+    cursor: default;
+  }
+
+  .puff,
+  .dot {
+    animation: none;
+  }
+}
