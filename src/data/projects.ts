@@ -4,6 +4,12 @@ export type Highlight = {
   body: string
 }
 
+export type Shot = {
+  /** Path under `public/`. */
+  src: string
+  alt: string
+}
+
 export type Project = {
   slug: string
   title: string
@@ -20,6 +26,8 @@ export type Project = {
   stack: readonly string[]
   /** Path under `public/`. Left out, the layout falls back to a title plate. */
   image?: string | undefined
+  /** Extra screenshots, shown after `image` in the case-study slideshow. */
+  gallery?: readonly Shot[] | undefined
   /** Left out for private repositories, where a link would only 404. */
   repoUrl?: string | undefined
   liveUrl?: string | undefined
@@ -59,6 +67,17 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['React', 'Vite', 'Tailwind CSS', 'Express', 'MongoDB', 'Mongoose', 'Playwright'],
+    image: 'assets/projects/pharmalytics-1.webp',
+    gallery: [
+      {
+        src: 'assets/projects/pharmalytics-2.webp',
+        alt: 'Step one of the patient intake form, for profile data',
+      },
+      {
+        src: 'assets/projects/pharmalytics-3.webp',
+        alt: 'The biometrics step, with vitals fields and a table of past entries',
+      },
+    ],
   },
   {
     slug: 'ledgr',
@@ -91,6 +110,7 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['Next.js', 'React', 'TypeScript', 'PostgreSQL', 'Prisma', 'NextAuth', 'Tailwind CSS', 'daisyUI'],
+    image: 'assets/projects/ledgr.webp',
   },
   {
     slug: 'compass-desk',
@@ -123,6 +143,21 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['Node.js', 'Express', 'TypeScript', 'Supabase', 'PostgreSQL', 'Groq', 'Zod', 'Swagger'],
+    image: 'assets/projects/compassdesk-1.webp',
+    gallery: [
+      {
+        src: 'assets/projects/compassdesk-2.webp',
+        alt: 'The customer request form, with department, subject, message, and attachments',
+      },
+      {
+        src: 'assets/projects/compassdesk-3.webp',
+        alt: 'A refund ticket where Compass AI replies first and a human handler takes over',
+      },
+      {
+        src: 'assets/projects/compassdesk-4.webp',
+        alt: 'The agent ticket queue, showing which tickets the AI agent or a person is handling',
+      },
+    ],
   },
   {
     slug: 'hopspring',
@@ -155,6 +190,13 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['TypeScript', 'Node.js', 'discord.js', 'LangChain', 'Pinecone', 'Groq', 'Gemini'],
+    image: 'assets/projects/hopspring-1.webp',
+    gallery: [
+      {
+        src: 'assets/projects/hopspring-2.webp',
+        alt: "HopSpring's Discord profile card, with its avatar and a short bio",
+      },
+    ],
   },
   {
     slug: 'tweekly',
@@ -187,6 +229,7 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['React', 'TypeScript', 'Vite', 'Zustand', 'jsPDF'],
+    image: 'assets/projects/tweekly.webp',
     liveUrl: 'https://tweekly.onrender.com',
   },
   {
@@ -220,6 +263,17 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['React', 'JavaScript', 'LangChain', 'Groq', 'Pinecone', 'Firebase'],
+    image: 'assets/projects/stella-1.webp',
+    gallery: [
+      {
+        src: 'assets/projects/stella-2.webp',
+        alt: 'The same reading screen in dark mode, with the conversation continued',
+      },
+      {
+        src: 'assets/projects/stella-3.webp',
+        alt: 'The story library, with an A to Z filter and a search bar',
+      },
+    ],
   },
   {
     slug: 'd-enroll',
@@ -252,6 +306,21 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['React', 'Node.js', 'Express', 'gRPC', 'MySQL', 'Docker'],
+    image: 'assets/projects/d-enroll-1.webp',
+    gallery: [
+      {
+        src: 'assets/projects/d-enroll-2.webp',
+        alt: "A student's curriculum audit, with course statuses and a units summary",
+      },
+      {
+        src: 'assets/projects/d-enroll-4.webp',
+        alt: "The faculty view of a professor's handled sections",
+      },
+      {
+        src: 'assets/projects/d-enroll-3.webp',
+        alt: 'Course ratings from students, shown to the professor',
+      },
+    ],
   },
   {
     slug: 'solofit',
@@ -318,6 +387,16 @@ const catalogue: readonly Project[] = [
     ],
     stack: ['MySQL', 'Python', 'pandas', 'SQLAlchemy', 'Power BI'],
     image: 'assets/projects/steam-warehouse.webp',
+    gallery: [
+      {
+        src: 'assets/projects/steam-warehouse-2.webp',
+        alt: 'Report page comparing total average playtime by genre across price ranges',
+      },
+      {
+        src: 'assets/projects/steam-warehouse-3.webp',
+        alt: 'Report page plotting review count against positive rating percentage, coloured by genre',
+      },
+    ],
     liveUrl:
       'https://app.powerbi.com/view?r=eyJrIjoiNzRmNDhiNTctNjcxNC00MDNjLTkzNzYtNjFkYTM5NDExN2VhIiwidCI6ImYzNGEzNWJkLWE2NWQtNDYwNS1iMGZhLWQyNTcxZjgzMWY1ZSIsImMiOjEwfQ%3D%3D',
     liveLabel: 'Open the dashboard',
@@ -349,6 +428,7 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['Python', 'pandas', 'NumPy', 'scikit-learn', 'PyTorch', 'Optuna', 'Jupyter'],
+    image: 'assets/projects/family-income.webp',
   },
   {
     slug: 'fanime-anime-forum',
@@ -373,7 +453,7 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['HTML', 'CSS', 'JavaScript', 'jQuery', 'Handlebars', 'Mongoose', 'MongoDB Atlas'],
-    image: 'assets/projects/fanime.png',
+    image: 'assets/projects/fanime.webp',
     repoUrl: 'https://github.com/mark-edison-jim/Fanime',
   },
   {
@@ -407,7 +487,7 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['SQL', 'Java', 'HTML', 'CSS'],
-    image: 'assets/projects/sql.png',
+    image: 'assets/projects/sql.webp',
     repoUrl: 'https://github.com/Shioxri/CCINFOM-DB-App',
   },
   {
@@ -437,7 +517,7 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['Java', 'Java Swing'],
-    image: 'assets/projects/vendingmachine.png',
+    image: 'assets/projects/vendingmachine.webp',
     repoUrl: 'https://github.com/Shioxri/CCPROG3-Machine-Project',
   },
   {
@@ -467,7 +547,7 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['Java'],
-    image: 'assets/projects/javagraphs.png',
+    image: 'assets/projects/javagraphs.webp',
     repoUrl: 'https://github.com/Shioxri/CCDSALG-MCO2',
   },
   {
@@ -493,7 +573,7 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['Java'],
-    image: 'assets/projects/javasort.png',
+    image: 'assets/projects/javasort.webp',
     repoUrl: 'https://github.com/Shioxri/CCDSALG-MCO1',
   },
   {
@@ -522,7 +602,7 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['Ruby'],
-    image: 'assets/projects/rubyimg.png',
+    image: 'assets/projects/rubyimg.webp',
     repoUrl: 'https://github.com/Shioxri/CSADPRG-MP',
   },
   {
@@ -543,7 +623,7 @@ const catalogue: readonly Project[] = [
       },
     ],
     stack: ['Python'],
-    image: 'assets/projects/pypypy.png',
+    image: 'assets/projects/pypypy.webp',
     repoUrl: 'https://github.com/Shioxri/Simple-Python-Budgeting-App',
   },
 ]

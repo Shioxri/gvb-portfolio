@@ -4,6 +4,9 @@
   "version": "2.0.0",
   "type": "module",
   "description": "Personal portfolio of Gerard Vito Belardo.",
+  "engines": {
+    "node": "24.x"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc --build && vite build",

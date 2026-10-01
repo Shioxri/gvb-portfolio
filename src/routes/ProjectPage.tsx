@@ -1,10 +1,10 @@
 import { Link, Navigate, useParams } from 'react-router-dom'
 import { findProject, getNeighbours, projectNumber, projects } from '~/data/projects'
 import { usePageMeta } from '~/hooks/usePageMeta'
-import { asset } from '~/lib/asset'
 import { ActionLink } from '~/components/ui/ActionLink'
 import { Arrow } from '~/components/ui/Arrow'
 import { Reveal } from '~/components/ui/Reveal'
+import { Slideshow } from '~/components/projects/Slideshow'
 import styles from './ProjectPage.module.css'
 
 export default function ProjectPage() {
@@ -19,6 +19,10 @@ export default function ProjectPage() {
 
   const index = projects.indexOf(project)
   const { previous, next } = getNeighbours(project.slug)
+  const slides = [
+    ...(project.image ? [{ src: project.image, alt: `Screenshot from ${project.title}` }] : []),
+    ...(project.gallery ?? []),
+  ]
 
   return (
     <article className={styles.page}>
@@ -54,14 +58,9 @@ export default function ProjectPage() {
           ) : null}
         </header>
 
-        {project.image ? (
+        {slides.length ? (
           <Reveal className={styles.cover}>
-            <img
-              className={styles.coverImage}
-              src={asset(project.image)}
-              alt={`Screenshot from ${project.title}`}
-              decoding="async"
-            />
+            <Slideshow key={project.slug} slides={slides} label={`Screenshots from ${project.title}`} />
           </Reveal>
         ) : null}
 
@@ -100,7 +99,7 @@ export default function ProjectPage() {
 
         <section className={styles.highlights}>
           <Reveal>
-            <h2 className={styles.highlightsTitle}>What I did</h2>
+            <h2 className={styles.highlightsTitle}>Highlights</h2>
           </Reveal>
           <ul className={styles.highlightList}>
             {project.highlights.map((highlight, position) => (
