@@ -61,19 +61,6 @@
   margin-bottom: 1.75rem;
 }
 
-.eyebrowRule {
-  width: 2.5rem;
-  height: 1px;
-  background: var(--accent);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 700ms var(--ease-out) 240ms;
-}
-
-.hero[data-ready='true'] .eyebrowRule {
-  transform: none;
-}
-
 .title {
   /* Sized so the sentence lands on three lines in the grid track rather than
      inheriting a scale step that was tuned for short headings. */
@@ -185,14 +172,37 @@
     gap: 3rem;
   }
 
+  /* Stacked under the centred portrait, the copy centres with it. */
   .copy {
     order: 2;
+    text-align: center;
+  }
+
+  .eyebrow,
+  .actions {
+    justify-content: center;
+  }
+
+  .lede {
+    margin-inline: auto;
   }
 
   .rail {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     gap: 0.9rem;
+  }
+}
+
+/* On phones the role and location each take a line, with no separator. */
+@media (max-width: 560px) {
+  .eyebrow {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .eyebrowDot {
+    display: none;
   }
 }
 

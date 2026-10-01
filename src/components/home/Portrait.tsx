@@ -74,10 +74,6 @@ export function Portrait() {
               draggable={false}
             />
           </div>
-          <span className={styles.caption}>
-            <span className={styles.dot} />
-            {site.location}
-          </span>
         </div>
       </div>
 

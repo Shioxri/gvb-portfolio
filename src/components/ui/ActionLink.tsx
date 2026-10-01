@@ -4,10 +4,13 @@ import { Arrow } from './Arrow'
 import styles from './ActionLink.module.css'
 
 type Variant = 'outline' | 'solid' | 'quiet'
+type Shape = 'pill' | 'sharp'
 
 type CommonProps = {
   children: ReactNode
   variant?: Variant | undefined
+  /** Pill by default; sharp trades the round ends for near-square corners. */
+  shape?: Shape | undefined
   /** Hidden by default on the quiet variant, where the rule does the work. */
   showArrow?: boolean | undefined
   className?: string | undefined
@@ -28,6 +31,7 @@ type ActionLinkProps = CommonProps &
 export function ActionLink({
   children,
   variant = 'outline',
+  shape = 'pill',
   showArrow = true,
   className,
   ...rest
@@ -46,6 +50,7 @@ export function ActionLink({
   const shared = {
     className: [styles.link, className].filter(Boolean).join(' '),
     'data-variant': variant,
+    'data-shape': shape,
     'data-external': isExternal ? 'true' : 'false',
   }
 

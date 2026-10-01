@@ -8,7 +8,7 @@ export const site = {
   github: 'https://github.com/Shioxri',
   linkedin: 'https://www.linkedin.com/in/gvbelardo/',
   resume: 'assets/about/Belardo_GerardVito_Resume.pdf',
-  portrait: 'assets/hero/heroNewImg.jpg',
+  portrait: 'assets/hero/heroNewImg.webp',
 } as const
 
 export type ResumeVariant = {
