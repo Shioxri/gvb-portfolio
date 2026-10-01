@@ -127,32 +127,6 @@
   }
 }
 
-/* Caption chip, overlapping the orb's lower-left edge and riding with it. */
-.caption {
-  position: absolute;
-  left: -0.5rem;
-  bottom: 1.25rem;
-  z-index: 2;
-
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.5rem 0.9rem;
-  border-radius: 999px;
-
-  background: color-mix(in oklab, var(--ground) 72%, transparent);
-  border: 1px solid var(--rule);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  font-family: var(--font-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--ink-dim);
-  pointer-events: none;
-}
-
 .degree {
   /* Above the aura, which spills down behind it. */
   position: relative;
@@ -168,26 +142,16 @@
   color: var(--ink-dim);
 }
 
-.dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 0 color-mix(in oklab, var(--accent) 55%, transparent);
-  animation: pulse 2.8s var(--ease-out) infinite;
-}
-
-@keyframes pulse {
-  60%,
-  100% {
-    box-shadow: 0 0 0 9px color-mix(in oklab, var(--accent) 0%, transparent);
-  }
-}
-
 @media (max-width: 900px) {
   .anchor {
     width: min(100%, 19rem);
     margin-inline: auto;
+  }
+}
+
+@media (max-width: 560px) {
+  .anchor {
+    width: min(100%, 15.5rem);
   }
 }
 
@@ -196,8 +160,7 @@
     cursor: default;
   }
 
-  .puff,
-  .dot {
+  .puff {
     animation: none;
   }
 }

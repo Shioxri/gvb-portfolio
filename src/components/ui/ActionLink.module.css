@@ -72,6 +72,17 @@
   transform: translate3d(0.22em, -0.22em, 0);
 }
 
+/* Sharp shape: near-square corners and a tighter mono label for a crisper,
+   more technical chip. */
+.link[data-shape='sharp'] {
+  padding: 0.8em 1.15em 0.8em 1.3em;
+  border-radius: 2px;
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
 /* Quiet variant: no chip, just the label and a rule that grows on hover. */
 .link[data-variant='quiet'] {
   padding: 0.2em 0;

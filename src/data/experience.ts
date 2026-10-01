@@ -25,6 +25,6 @@ export const roles: readonly Role[] = [
       'Built the backend for CompassDesk, an AI-assisted ticketing platform where the AI handles simple tickets in real time and escalates the rest to a human agent.',
     ],
     url: 'https://springboard.com.ph/',
-    logo: 'assets/about/springboard_logo.svg',
+    logo: 'assets/about/springboard.svg',
   },
 ]

@@ -271,19 +271,29 @@
 }
 
 .menuButton span:nth-child(1) {
-  top: calc(50% - 4px);
+  top: calc(50% - 6px);
 }
 
 .menuButton span:nth-child(2) {
-  top: calc(50% + 4px);
+  top: calc(50% - 0.75px);
 }
 
+.menuButton span:nth-child(3) {
+  top: calc(50% + 4.5px);
+}
+
+/* Open: the outer bars cross into an X and the middle one fades out. */
 .menuButton[aria-expanded='true'] span:nth-child(1) {
-  transform: translateY(4px) rotate(45deg);
+  transform: translateY(5.25px) rotate(45deg);
 }
 
 .menuButton[aria-expanded='true'] span:nth-child(2) {
-  transform: translateY(-4px) rotate(-45deg);
+  opacity: 0;
+  transform: scaleX(0.4);
+}
+
+.menuButton[aria-expanded='true'] span:nth-child(3) {
+  transform: translateY(-5.25px) rotate(-45deg);
 }
 
 /* Mobile panel ------------------------------------------------------------ */
@@ -340,21 +350,6 @@
   color: var(--accent);
 }
 
-.panelFooter {
-  margin-top: 2.5rem;
-  font-family: var(--font-mono);
-  font-size: var(--step--1);
-  letter-spacing: 0.08em;
-  color: var(--ink-dim);
-
-  opacity: 0;
-  transition: opacity var(--dur) var(--ease-out) 320ms;
-}
-
-.panel[data-open='true'] .panelFooter {
-  opacity: 1;
-}
-
 /* Skip link --------------------------------------------------------------- */
 
 .skip {
@@ -376,13 +371,32 @@
 }
 
 @media (max-width: 860px) {
-  /* No centre nav here, so the wordmark and actions just sit at either end. */
+  /* No centre nav here (the menu panel covers it), so the wordmark and
+     actions just sit at either end. */
   .inner {
     grid-template-columns: minmax(0, 1fr) auto;
   }
 
-  .nav,
+  .nav {
+    display: none;
+  }
+
   .menuButton {
     display: block;
+  }
+
+  .actions {
+    gap: 0.75rem;
+  }
+
+  /* The full name has no room here, so the wordmark stays folded to GVB
+     instead of waiting for the bar to dock. */
+  .rest {
+    grid-template-columns: 0fr;
+    opacity: 0;
+  }
+
+  .namePart:not(:last-child) .initial {
+    margin-right: 0.14em;
   }
 }

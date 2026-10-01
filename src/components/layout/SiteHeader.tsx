@@ -354,6 +354,7 @@ export function SiteHeader() {
             >
               <span />
               <span />
+              <span />
             </button>
           </div>
         </div>
@@ -379,9 +380,6 @@ export function SiteHeader() {
             {item.label}
           </button>
         ))}
-        <a className={styles.panelFooter} href={`mailto:${site.email}`}>
-          {site.email}
-        </a>
       </div>
     </>
   )

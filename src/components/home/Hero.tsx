@@ -16,8 +16,11 @@ export function Hero() {
         <div className={styles.grid}>
           <div className={styles.copy}>
             <p className={`eyebrow ${styles.eyebrow} ${styles.stage}`} style={{ '--index': 0 }}>
-              <span className={styles.eyebrowRule} aria-hidden="true" />
-              {site.role} · {site.location}
+              <span>{site.role}</span>
+              <span className={styles.eyebrowDot} aria-hidden="true">
+                ·
+              </span>
+              <span>{site.location}</span>
             </p>
 
             <h1 className={`${styles.title} ${styles.stage}`} style={{ '--index': 1 }}>

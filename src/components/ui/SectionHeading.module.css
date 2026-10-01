@@ -31,8 +31,15 @@
   max-width: 20ch;
 }
 
+/* Sits under the title in the first column; the lede spans both rows beside
+   them, so the pair stays bottom-aligned with it. */
 .action {
-  margin-left: auto;
+  grid-column: 1;
+}
+
+.action ~ .lede {
+  grid-column: 2;
+  grid-row: 2 / span 2;
 }
 
 .lede {
@@ -51,5 +58,10 @@
 
   .title {
     max-width: none;
+  }
+
+  .action ~ .lede {
+    grid-column: 1;
+    grid-row: auto;
   }
 }

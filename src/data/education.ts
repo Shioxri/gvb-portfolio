@@ -11,9 +11,9 @@ export const education: readonly Education[] = [
   {
     institution: 'De La Salle University Manila',
     qualification: 'BS Computer Science, major in Software Technology',
-    period: 'Sept 2022 - present',
-    notes: ['Magna Cum Laude', '3.68 CGPA', 'Consistent Dean’s Lister', 'DOST MERIT Scholar'],
-    logo: 'assets/about/DLSU-LOGO.svg',
+    period: 'Sept 2022 - Dec 2026 (expected)',
+    notes: ['Magna Cum Laude', '3.688 CGPA', 'Consistent Dean’s Lister', 'DOST MERIT Scholar'],
+    logo: 'assets/about/dlsu.svg',
     url: 'https://www.dlsu.edu.ph',
   },
   {

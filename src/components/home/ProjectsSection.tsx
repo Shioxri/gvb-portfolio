@@ -22,7 +22,11 @@ export function ProjectsSection() {
           eyebrow="Projects"
           title="A running list of things I've built."
           counter={`${String(visible.length).padStart(2, '0')} / ${String(projects.length).padStart(2, '0')}`}
-          action={<ActionLink to="/projects">See all {projects.length} projects</ActionLink>}
+          action={
+            <ActionLink to="/projects" shape="sharp">
+              See all {projects.length} projects
+            </ActionLink>
+          }
         >
           A mix of internship work, coursework, and a few things I built just to learn something
           new. Click into any of them for more on how it came together.
@@ -30,7 +34,7 @@ export function ProjectsSection() {
 
         <ProjectList projects={visible} />
 
-        {/* The full archive is always one click away in the heading; this only
+        {/* The full archive is always one click away under the heading; this only
             widens the curated set without leaving the page. */}
         {canExpand ? (
           <Reveal className={styles.actions}>

@@ -66,11 +66,13 @@
   --surface: #172017;
   --surface-raised: #1e291d;
 
-  --header-surface: #131b12;
-  --footer-surface: #0a0f09;
+  /* Both bands lift into pine rather than sinking toward black: there is
+     little room below the ground, so lighter is the only way to stand apart. */
+  --header-surface: #1f2e1d;
+  --footer-surface: #26392b;
   --footer-ink: #ece6d6;
-  --footer-ink-dim: rgba(236, 230, 214, 0.7);
-  --footer-rule: rgba(236, 230, 214, 0.14);
+  --footer-ink-dim: rgba(236, 230, 214, 0.76);
+  --footer-rule: rgba(236, 230, 214, 0.2);
 
   /* Pastel green: light and low-saturation so it glows softly on the dark
      ground instead of reading as a bright UI green. */
